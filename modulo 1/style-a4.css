@@ -1,0 +1,34 @@
+.perfil-principal {
+  background-color: #f0f8ff;
+  padding: 20px;
+  border: 2px solid #4682b4;
+  margin: 15px;
+}
+        
+.tabla-info {
+  border-collapse: collapse;
+  width: 100%;
+  background-color: #fafafa;
+  font-size: 14px;
+}
+        
+#seccion-contacto {
+  background-color: #fff8dc;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+        
+.lista-habilidades {
+  background-color: #f5f5dc;
+  padding: 15px;
+  border-left: 5px;
+  list-style-type: square;
+}
+       
+#imagen-perfil {
+  border: 3px solid #696969;
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+}
