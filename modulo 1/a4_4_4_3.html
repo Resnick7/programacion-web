@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>To-Do List con Observer</title>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    ul { list-style: none; padding: 0; }
+    li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    border: 1px solid #ccc;
+    margin: 5px 0;
+    width: 30%;
+    }
+    .acciones {
+      display: flex;
+      gap: 5px;
+    }
+    li.done {
+      background: #c8f7c5;
+    }
+    li.done span {
+      text-decoration: line-through;
+      color: #555;
+    }
+    li.done button {
+      text-decoration: none;
+    }
+    button {
+      margin-left: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>To-Do List</h1>
+  <input id="input-todo" type="text" placeholder="Escribe una tarea...">
+  <button id="btn-agregar">Agregar</button>
+  
+  <ul id="todo-list"></ul>
+  
+  <h3>Registro de cambios en el DOM:</h3>
+  <pre id="log">Esperando cambios en el DOM...</pre>
+  
+  <script>
+    const input = document.getElementById("input-todo");
+    const btnAgregar = document.getElementById("btn-agregar");
+    const lista = document.getElementById("todo-list");
+    const log = document.getElementById("log");
+
+    // Función para crear un item de la lista
+   function crearItem(texto) {
+    const li = document.createElement("li");
+
+    const spanTexto = document.createElement("span");
+    spanTexto.textContent = texto;
+
+    // Contenedor de botones
+    const acciones = document.createElement("div");
+    acciones.classList.add("acciones");
+
+    // Botón completar
+    const btnCheck = document.createElement("button");
+    btnCheck.textContent = "✔";
+    btnCheck.onclick = () => {
+      li.classList.toggle("done");
+    };
+
+    // Botón eliminar
+    const btnDelete = document.createElement("button");
+    btnDelete.textContent = "✖";
+    btnDelete.onclick = () => {
+      li.remove();
+    };
+
+    acciones.appendChild(btnCheck);
+    acciones.appendChild(btnDelete);
+
+    li.appendChild(spanTexto);
+    li.appendChild(acciones);
+
+    return li;
+  }
+
+    btnAgregar.onclick = () => {
+      if (input.value.trim() !== "") {
+        const item = crearItem(input.value.trim());
+        lista.appendChild(item);
+        input.value = "";
+      }
+    };
+
+    const observer = new MutationObserver(mutations => {
+      mutations.forEach(m => {
+        log.textContent += `\nCambio: ${m.type} en ${m.target.nodeName}`;
+      });
+    });
+
+    observer.observe(lista, {
+      childList: true,
+      attributes: true,
+      subtree: true
+    });
+  </script>
+</body>
+</html>

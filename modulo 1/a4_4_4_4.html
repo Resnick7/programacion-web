@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Login con intentos</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    form { max-width: 300px; }
+    input { display: block; margin: 10px 0; padding: 8px; width: 100%; }
+    button { padding: 8px 12px; cursor: pointer; }
+    #error { color: red; margin-top: 10px; }
+    #bloqueado { color: darkred; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Login</h1>
+  <form id="login-form">
+    <input type="text" id="usuario" placeholder="Usuario">
+    <input type="password" id="clave" placeholder="Contraseña">
+    <button type="submit">Ingresar</button>
+  </form>
+
+  <p id="error"></p>
+  <p id="bloqueado"></p>
+
+  <script>
+    const form = document.getElementById("login-form");
+    const usuario = document.getElementById("usuario");
+    const clave = document.getElementById("clave");
+    const error = document.getElementById("error");
+    const bloqueado = document.getElementById("bloqueado");
+
+    // Usuario válido (podrías traerlo de un backend o lista)
+    const usuarioValido = { nombre: "admin", password: "1234" };
+
+    let intentos = 0;
+    const maxIntentos = 3;
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      // Verificar si ya está bloqueado
+      if (intentos >= maxIntentos) {
+        bloqueado.textContent = "Cuenta bloqueada tras 3 intentos fallidos.";
+        return;
+      }
+
+      // Validar que los campos no estén vacíos
+      if (usuario.value.trim() === "" || clave.value.trim() === "") {
+        error.textContent = "Completa todos los campos.";
+        return;
+      }
+
+      // Validar credenciales
+      if (usuario.value === usuarioValido.nombre && clave.value === usuarioValido.password) {
+        error.textContent = "";
+        bloqueado.textContent = "";
+        alert("¡Login exitoso!");
+        form.reset();
+        intentos = 0; // resetear contador
+      } else {
+        intentos++;
+        error.textContent = `Usuario o contraseña incorrectos. Intento ${intentos} de ${maxIntentos}.`;
+
+        if (intentos >= maxIntentos) {
+          bloqueado.textContent = "Cuenta bloqueada tras 3 intentos fallidos.";
+          // Opcional: deshabilitar inputs
+          usuario.disabled = true;
+          clave.disabled = true;
+          form.querySelector("button").disabled = true;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
