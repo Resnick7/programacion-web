@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Contador</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background: #f5f5f5;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+    #contador {
+      font-size: 3rem;
+      margin: 20px 0;
+      color: #333;
+    }
+    .botones {
+      display: flex;
+      gap: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .inc {
+      background: #4caf50;
+      color: white;
+    }
+    .inc:hover {
+      background: #45a049;
+    }
+    .dec {
+      background: #f44336;
+      color: white;
+    }
+    .dec:hover {
+      background: #d32f2f;
+    }
+  </style>
+</head>
+<body>
+  <h1>Contador:</h1>
+  <div id="contador">0</div>
+  
+  <div class="botones">
+    <button class="inc" id="btnInc">Incrementar</button>
+    <button class="dec" id="btnDec">Decrementar</button>
+  </div>
+
+  <script>
+    let contador = 0;
+
+    const contadorDiv = document.getElementById("contador");
+    const btnInc = document.getElementById("btnInc");
+    const btnDec = document.getElementById("btnDec");
+
+    function render() {
+      contadorDiv.textContent = contador;
+    }
+
+    btnInc.addEventListener("click", () => {
+      contador++;
+      render();
+    });
+
+    btnDec.addEventListener("click", () => {
+      contador--;
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>
