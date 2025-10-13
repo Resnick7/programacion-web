@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario Usuario</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<h1>Enviar datos al servlet</h1>
+
+<form id="usuarioForm">
+    Nombre: <input type="text" name="nombre" id="nombre"><br><br>
+    Edad: <input type="number" name="edad" id="edad"><br><br>
+    <button type="submit">Enviar</button>
+</form>
+
+<h2>Respuesta:</h2>
+<div id="respuesta"></div>
+
+<script>
+    $(document).ready(function() {
+        $("#usuarioForm").on("submit", function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: "hola",
+                type: "POST",
+                data: {
+                    nombre: $("#nombre").val(),
+                    edad: $("#edad").val()
+                },
+                success: function(respuesta) {
+                    $("#respuesta").html(respuesta);
+                },
+                error: function() {
+                    $("#respuesta").html("Error al enviar la petición.");
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

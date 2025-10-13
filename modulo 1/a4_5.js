@@ -1,4 +1,3 @@
-// composición A a = New A()
 const esNum = (n) => typeof n === "number" && Number.isFinite(n)
 
 class Rueda {
