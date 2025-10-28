@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora Dinámica</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #333;
+      font-family: Arial, sans-serif;
+    }
+
+    .calculadora {
+      background-color: #1c1c1c;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .pantalla {
+      background-color: black;
+      color: lime;
+      font-size: 2em;
+      text-align: right;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      height: 40px;
+      overflow: hidden;
+    }
+
+    .botones {
+      display: grid;
+      grid-template-columns: repeat(4, 60px);
+      gap: 10px;
+    }
+
+    button {
+      padding: 15px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 5px;
+      background-color: #e0e0e0;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button:hover {
+      background-color: #bdbdbd;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    // Crear contenedor principal
+    const calc = document.createElement("div");
+    calc.className = "calculadora";
+
+    // Crear pantalla
+    const pantalla = document.createElement("div");
+    pantalla.className = "pantalla";
+    pantalla.textContent = "0";
+    calc.appendChild(pantalla);
+
+    // Crear contenedor de botones
+    const botones = document.createElement("div");
+    botones.className = "botones";
+    calc.appendChild(botones);
+
+    // Lista de botones
+    const valores = [
+      "7", "8", "9", "/",
+      "4", "5", "6", "*",
+      "1", "2", "3", "-",
+      "0", "C", "=", "+"
+    ];
+
+    // Generar botones dinámicamente
+    valores.forEach(valor => {
+      const btn = document.createElement("button");
+      btn.textContent = valor;
+      btn.addEventListener("click", () => manejarClick(valor));
+      botones.appendChild(btn);
+    });
+
+    document.body.appendChild(calc);
+
+    // Lógica de la calculadora
+    function manejarClick(valor) {
+      if (valor === "C") {
+        pantalla.textContent = "0";
+      } else if (valor === "=") {
+        try {
+          pantalla.textContent = eval(pantalla.textContent);
+        } catch {
+          pantalla.textContent = "Error";
+        }
+      } else {
+        if (pantalla.textContent === "0" || pantalla.textContent === "Error") {
+          pantalla.textContent = valor;
+        } else {
+          pantalla.textContent += valor;
+        }
+      }
+    }
+  </script>
+</body>
+</html>
